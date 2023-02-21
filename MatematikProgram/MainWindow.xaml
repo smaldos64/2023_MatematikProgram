@@ -16,6 +16,7 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="20"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
@@ -37,8 +38,15 @@
                                 <TextBox Name="txtSlutKapital" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap"  Text="" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="1" MinWidth="120" KeyDown="txtCheckForValidKeyPressedDoublePositive" />
                                 <TextBox Name="txtAntalTerminer" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap"  Text="" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="1" Grid.Row="2" Grid.Column="1" MinWidth="120" KeyDown="txtCheckForValidKeyPressedPositiveInteger" />
                                 <TextBox Name="txtRentesats" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap"  Text="" VerticalAlignment="Top" Width="Auto" Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="1" MinWidth="120" KeyDown="txtCheckForValidKeyPressedDouble" />
-                                <Button Content="Beregn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Name="btnBeregnVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="0" Grid.Column="3" Click="btnBeregnVaekstFormelVariable_Click"/>
-                                <Button Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Name="btnClearVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="3" Click="btnClearVaekstFormelVariable_Click" />
+                                <Label Content="Kr" HorizontalAlignment="Left" VerticalAlignment="Top" Name="lblStartKapitalKr"  Grid.ColumnSpan="1" Grid.Row="0" Grid.Column="2" />
+                                <Label Content="Kr" HorizontalAlignment="Left" VerticalAlignment="Top" Name="lblSlutKapitalKr"  Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="2" />
+                                <Label Content="%" HorizontalAlignment="Left" VerticalAlignment="Top" Name="lbllblRentesatsProcent"  Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="2" />
+                                <Button Content="Clear Starkapital Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearStartKapital" Grid.ColumnSpan="1" Grid.Row="0" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
+                                <Button Content="Clear Slutkapital Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearSlutKapital" Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
+                                <Button Content="Clear Antal Terminer Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearAntalTerminer" Grid.ColumnSpan="1" Grid.Row="2" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
+                                <Button Content="Clear Rentesats Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearRentesats" Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
+                                <Button Content="Beregn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Name="btnBeregnVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="1" Click="btnBeregnVaekstFormelVariable_Click"/>
+                                <Button Content="Clear Alle Felter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Name="btnClearVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="4" Click="btnClearVaekstFormelVariable_Click" />
                             </Grid>
                             </StackPanel>
                         </TabItem>

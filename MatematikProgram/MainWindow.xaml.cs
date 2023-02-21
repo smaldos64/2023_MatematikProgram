@@ -224,5 +224,27 @@ namespace MatematikProgram
             TextBoxes[Const.RentesatsTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals((Math.Pow(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital, 1 / VaekstFormelClass_Object.AntalTerminer) - 1) * 100, Const.DefaultNumberOfDecimals);
         }
         #endregion
+
+        private void btnClearVaekstformelTextBox_Click(object sender, RoutedEventArgs e)
+        {
+            switch (((System.Windows.FrameworkElement)sender).Name)
+            {
+                case "btnClearStartKapital":
+                    txtStartKapital.Text = string.Empty;
+                    break;
+
+                case "btnClearSlutKapital":
+                    txtSlutKapital.Text = string.Empty;
+                    break;
+
+                case "btnClearAntalTerminer":
+                    txtAntalTerminer.Text = string.Empty;
+                    break;
+
+                case "btnClearRentesats":
+                    txtRentesats.Text = string.Empty;
+                    break;
+            }
+        }
     }
 }

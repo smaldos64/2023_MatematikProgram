@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MatematikProgram.Const
+namespace MatematikProgram.Constants
 {
     public class Const
     {
+        #region Const_General_Code
+        public static int DefaultNumberOfDecimals = 2;
+        #endregion
+
         #region VaekstFormel
         public const int StartKapitalTextBoxNummer = 0;
         public const int SlutKapitalTextBoxNummer = 1;

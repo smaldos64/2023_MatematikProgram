@@ -17,80 +17,10 @@ using System.Windows.Shapes;
 
 using MatematikProgram.Tools;
 using MatematikProgram.Constants;
+using MatematikProgram.Models;
 
 namespace MatematikProgram
 {
-
-    class VaekstFormelClass
-    {
-        private double startKapital;
-        private double slutKapital;
-        private int antalTerminer;
-        private double rentesats;
-
-        public double StartKapital
-        {
-            get { return startKapital; }
-            set { startKapital = value; }
-        }
-
-        public double SlutKapital
-        {
-            get { return slutKapital; }
-            set { slutKapital = value; }
-        }
-
-        public int AntalTerminer
-        {
-            get { return antalTerminer; }
-            set { antalTerminer = value; }
-        }
-
-        public double Rentesats
-        {
-            get { return rentesats; }
-            set { rentesats = value; }
-        }
-
-        public VaekstFormelClass(string StartKapitalString, string SlutKapitalString, string AntalTerminerString, string RentesatsString)
-        {
-            try
-            {
-                StartKapital = Convert.ToDouble(StartKapitalString);
-            }
-            catch (Exception Error)
-            {
-                StartKapital = 0;
-            }
-
-            try
-            {
-                SlutKapital = Convert.ToDouble(SlutKapitalString);
-            }
-            catch (Exception Error)
-            {
-                SlutKapital = 0;
-            }
-
-            try
-            {
-                AntalTerminer = Convert.ToInt16(AntalTerminerString);
-            }
-            catch (Exception Error)
-            {
-                AntalTerminer = 0;
-            }
-
-            try
-            {
-                Rentesats = Convert.ToDouble(RentesatsString)/100;
-            }
-            catch (Exception Error)
-            {
-                Rentesats = 0;
-            }
-        }
-    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -162,8 +92,32 @@ namespace MatematikProgram
         private void btnClearVaekstFormelVariable_Click(object sender, RoutedEventArgs e)
         {
             ControlTools.ClearTextBoxes(TextBoxList);
+            VaekstformelBeregningerDataGrid.Visibility = Visibility.Hidden;
         }
-        
+
+        private void BeregnOgVisDataGrid(VaekstFormelClass VaekstFormelClass_Object)
+        {
+            List<VaekstFormelClass> VaekstFormelClassList = new List<VaekstFormelClass>();
+            double StartKapital = VaekstFormelClass_Object.StartKapital;
+
+            for (int Counter = 0; Counter < VaekstFormelClass_Object.AntalTerminer; Counter++)
+            {
+                VaekstFormelClass VaekstFormelClass_Object_Work = new VaekstFormelClass();
+
+                VaekstFormelClass_Object_Work.AntalTerminer = Counter + 1;
+                VaekstFormelClass_Object_Work.Rentesats = VaekstFormelClass_Object.Rentesats;
+                VaekstFormelClass_Object_Work.StartKapital = Math.Round(StartKapital, Const.DefaultNumberOfDecimals);
+                VaekstFormelClass_Object_Work.SlutKapital = Math.Round(StartKapital * (1 + VaekstFormelClass_Object.Rentesats), Const.DefaultNumberOfDecimals);
+                
+                VaekstFormelClassList.Add(VaekstFormelClass_Object_Work);
+
+                StartKapital = VaekstFormelClass_Object_Work.SlutKapital;
+            }
+            VaekstformelBeregningerDataGrid.ItemsSource = VaekstFormelClassList;
+            VaekstformelBeregningerDataGrid.Visibility = Visibility.Visible;
+        }
+
+
         private void btnBeregnVaekstFormelVariable_Click(object sender, RoutedEventArgs e)
         {
             if (ControlTools.CheckTextBoxesForInformation(TextBoxList, " " , NumberOfTextBoxesShouldBeFilled))
@@ -190,11 +144,9 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            //double SlutKapital = Convert.ToDouble(TextBoxes[Const.SlutKapitalTextBoxNummer].Text);
-            //double AntalTerminer = Convert.ToDouble(TextBoxes[Const.AntalTerminerTextBoxNummer].Text);
-            //double Rentesats = (Convert.ToDouble(TextBoxes[Const.RentesatsTextBoxNummer].Text)) / 100;
-            //TextBoxes[Const.StartKapitalTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals(SlutKapital / Math.Pow((1 + Rentesats), AntalTerminer), Const.DefaultNumberOfDecimals);
-            TextBoxes[Const.StartKapitalTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals(VaekstFormelClass_Object.SlutKapital / Math.Pow((1 + VaekstFormelClass_Object.Rentesats), VaekstFormelClass_Object.AntalTerminer), Const.DefaultNumberOfDecimals);
+            VaekstFormelClass_Object.StartKapital = Math.Round(VaekstFormelClass_Object.SlutKapital / Math.Pow((1 + VaekstFormelClass_Object.Rentesats), VaekstFormelClass_Object.AntalTerminer), Const.DefaultNumberOfDecimals);
+            TextBoxes[Const.StartKapitalTextBoxNummer].Text = VaekstFormelClass_Object.StartKapital.ToString();
+            BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
 
         private void BeregnSlutKapital(List<TextBox> TextBoxes)
@@ -203,7 +155,9 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            TextBoxes[Const.SlutKapitalTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals(VaekstFormelClass_Object.StartKapital * Math.Pow((1 + VaekstFormelClass_Object.Rentesats), VaekstFormelClass_Object.AntalTerminer), Const.DefaultNumberOfDecimals);
+            VaekstFormelClass_Object.SlutKapital = Math.Round(VaekstFormelClass_Object.StartKapital * Math.Pow((1 + VaekstFormelClass_Object.Rentesats), VaekstFormelClass_Object.AntalTerminer), Const.DefaultNumberOfDecimals);
+            TextBoxes[Const.SlutKapitalTextBoxNummer].Text = VaekstFormelClass_Object.SlutKapital.ToString();
+            BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
 
         private void BeregnAntalTerminer(List<TextBox> TextBoxes)
@@ -212,7 +166,9 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            TextBoxes[Const.AntalTerminerTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals(Math.Log(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital) / Math.Log(1 + VaekstFormelClass_Object.Rentesats), Const.DefaultNumberOfDecimals);
+            VaekstFormelClass_Object.AntalTerminer = (int)(Math.Log(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital) / Math.Log(1 + VaekstFormelClass_Object.Rentesats));
+            TextBoxes[Const.AntalTerminerTextBoxNummer].Text = VaekstFormelClass_Object.AntalTerminer.ToString();
+            BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
 
         private void BeregnRentesats(List<TextBox> TextBoxes)
@@ -221,7 +177,9 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            TextBoxes[Const.RentesatsTextBoxNummer].Text = PrintOutTools.WritDecimalStringWithSpecifiedNumberOfDecimals((Math.Pow(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital, 1 / VaekstFormelClass_Object.AntalTerminer) - 1) * 100, Const.DefaultNumberOfDecimals);
+            VaekstFormelClass_Object.Rentesats = Math.Round((Math.Pow(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital, 1 / VaekstFormelClass_Object.AntalTerminer) - 1) * 100, Const.DefaultNumberOfDecimals);
+            TextBoxes[Const.RentesatsTextBoxNummer].Text = VaekstFormelClass_Object.Rentesats.ToString();
+            BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
         #endregion
 

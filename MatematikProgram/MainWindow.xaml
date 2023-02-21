@@ -28,7 +28,7 @@
                                     <RowDefinition Height="25"/>
                                     <RowDefinition Height="25"/>
                                     <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Label Content="Start Kapitel (K) : " HorizontalAlignment="Left" VerticalAlignment="Top" Name="lblStartKapital"  Grid.ColumnSpan="1" Grid.Row="0" Grid.Column="0" />
                                 <Label Content="Slut Kapital (Kn) : " HorizontalAlignment="Left" VerticalAlignment="Top" Name="lblSlutKapital"  Grid.ColumnSpan="1" Grid.Row="1" Grid.Column="0" />
@@ -47,6 +47,7 @@
                                 <Button Content="Clear Rentesats Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearRentesats" Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
                                 <Button Content="Beregn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Name="btnBeregnVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="1" Click="btnBeregnVaekstFormelVariable_Click"/>
                                 <Button Content="Clear Alle Felter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Name="btnClearVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="4" Click="btnClearVaekstFormelVariable_Click" />
+                                <DataGrid Name="VaekstformelBeregninger" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="7" />
                             </Grid>
                             </StackPanel>
                         </TabItem>

@@ -113,11 +113,49 @@ namespace MatematikProgram.Tools
             }
         }
 
+        public static bool CheckTextBoxesForInformation(List<TextBox> TextBoxes,
+                                                        int NumberOfItems)
+        {
+            int Counter;
+            int ValueSetCounter = 0;
+
+            for (Counter = 0; Counter < TextBoxes.Count; Counter++)
+            {
+                if (((TextBoxes[Counter].Text.Length > 0) &&
+                     (TextBoxes[Counter].Text != String.Empty) &&
+                     ("0" != TextBoxes[Counter].Text)))
+                {
+                    ValueSetCounter++;
+                }
+            }
+
+            if (NumberOfItems == ValueSetCounter)
+            {
+                return (true);
+            }
+            else
+            {
+                return (false);
+            }
+        }
+
         public static int GetEmptyTextBoxNumberInTextBoxList(List<TextBox> TextBoxes)
         {
             for (int Counter = 0; Counter < TextBoxes.Count; Counter++)
             {
                 if (string.IsNullOrEmpty(TextBoxes[Counter].Text))
+                {
+                    return (Counter);
+                }
+            }
+            return (-1);
+        }
+
+        public static int GetTextBoxNumberCOntainingZeroValueInTextBoxList(List<TextBox> TextBoxes)
+        {
+            for (int Counter = 0; Counter < TextBoxes.Count; Counter++)
+            {
+                if ("0" == TextBoxes[Counter].Text)
                 {
                     return (Counter);
                 }

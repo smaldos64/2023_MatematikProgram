@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MatematikProgram.Models
 {
-    public class VaekstFormelClass
+    public class VaekstFormelClass : INotifyPropertyChanged
     {
         private double startKapital;
         private double slutKapital;
@@ -16,25 +17,41 @@ namespace MatematikProgram.Models
         public double StartKapital
         {
             get { return startKapital; }
-            set { startKapital = value; }
+            set
+            {
+                startKapital = value;
+                OnPropertyChanged("StartKapital");
+            }
         }
 
         public double SlutKapital
         {
             get { return slutKapital; }
-            set { slutKapital = value; }
+            set 
+            { 
+                slutKapital = value;
+                OnPropertyChanged("SlutKapital");
+            }
         }
 
         public int AntalTerminer
         {
             get { return antalTerminer; }
-            set { antalTerminer = value; }
+            set 
+            { 
+                antalTerminer = value;
+                OnPropertyChanged("AntalTerminer");
+            }
         }
 
         public double Rentesats
         {
             get { return rentesats; }
-            set { rentesats = value; }
+            set 
+            { 
+                rentesats = value;
+                OnPropertyChanged("Rentesats");
+            }
         }
 
         public VaekstFormelClass(string StartKapitalString, string SlutKapitalString, string AntalTerminerString, string RentesatsString)
@@ -79,6 +96,23 @@ namespace MatematikProgram.Models
         public VaekstFormelClass()
         {
 
+        }
+
+        public void ClearVariables()
+        {
+            this.StartKapital = 0;
+            this.SlutKapital = 0;
+            this.AntalTerminer = 0;
+            this.Rentesats = 0;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string PropertyNavn)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyNavn));
+            }
         }
     }
 }

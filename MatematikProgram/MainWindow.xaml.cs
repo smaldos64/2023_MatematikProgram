@@ -33,9 +33,13 @@ namespace MatematikProgram
         private delegate void MethodDelegate(List<TextBox> TextBoxes);
         private List<MethodDelegate> MethodDelegateList = new List<MethodDelegate>();
 
+        private VaekstFormelClass VaekstFormelClass_Object = new VaekstFormelClass();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = VaekstFormelClass_Object;
         }
 
         #region General_Code
@@ -50,7 +54,7 @@ namespace MatematikProgram
                     TextBoxList.Add(txtAntalTerminer);
                     TextBoxList.Add(txtRentesats);
                     NumberOfTextBoxesShouldBeFilled = Const.RentesatsTextBoxNummer;
-                    ControlTools.ClearTextBoxes(TextBoxList);
+                    //ControlTools.ClearTextBoxes(TextBoxList);
                     MethodDelegateList.Clear();
                     MethodDelegateList.Add(BeregnStartKapital);
                     MethodDelegateList.Add(BeregnSlutKapital);
@@ -60,12 +64,25 @@ namespace MatematikProgram
             }
         }
 
+        private void CheckforZeroInFieldAndEraseField(ref string TextBoxString)
+        {
+            TextBoxString = String.Empty;
+        }
+
         private void txtCheckForValidKeyPressedDoublePositive(object sender, KeyEventArgs e)
         {
             if (!KeyHelper.IsKeyPressedValidPositive(((System.Windows.Controls.TextBox)sender).Text, e.Key))
             {
                 SystemSounds.Beep.Play();
                 e.Handled = true;
+            }
+            else
+            {
+                //CheckforZeroInFieldAndEraseField(ref (((TextBox)sender).Text));
+                if ("0" == ((System.Windows.Controls.TextBox)sender).Text)
+                {
+                    ((System.Windows.Controls.TextBox)sender).Text = String.Empty;
+                }
             }
         }
 
@@ -76,6 +93,13 @@ namespace MatematikProgram
                 SystemSounds.Beep.Play();
                 e.Handled = true;
             }
+            else
+            {
+                if ("0" == ((System.Windows.Controls.TextBox)sender).Text)
+                {
+                    ((System.Windows.Controls.TextBox)sender).Text = String.Empty;
+                }
+            }
         }
 
         private void txtCheckForValidKeyPressedPositiveInteger(object sender, KeyEventArgs e)
@@ -85,13 +109,21 @@ namespace MatematikProgram
                 SystemSounds.Beep.Play();
                 e.Handled = true;
             }
+            else
+            {
+                if ("0" == ((System.Windows.Controls.TextBox)sender).Text)
+                {
+                    ((System.Windows.Controls.TextBox)sender).Text = String.Empty;
+                }
+            }
         }
         #endregion
 
         #region VaekstFormel
         private void btnClearVaekstFormelVariable_Click(object sender, RoutedEventArgs e)
         {
-            ControlTools.ClearTextBoxes(TextBoxList);
+            //ControlTools.ClearTextBoxes(TextBoxList);
+            VaekstFormelClass_Object.ClearVariables();
             VaekstformelBeregningerDataGrid.Visibility = Visibility.Hidden;
         }
 
@@ -120,9 +152,9 @@ namespace MatematikProgram
 
         private void btnBeregnVaekstFormelVariable_Click(object sender, RoutedEventArgs e)
         {
-            if (ControlTools.CheckTextBoxesForInformation(TextBoxList, " " , NumberOfTextBoxesShouldBeFilled))
+            if (ControlTools.CheckTextBoxesForInformation(TextBoxList, NumberOfTextBoxesShouldBeFilled))
             {
-                int EmptyFieldNumber = ControlTools.GetEmptyTextBoxNumberInTextBoxList(TextBoxList);
+                int EmptyFieldNumber = ControlTools.GetTextBoxNumberCOntainingZeroValueInTextBoxList(TextBoxList);
                 if (EmptyFieldNumber < 0)
                 {
                     MessageBox.Show("Hmm noget galt i din kode her !!!");
@@ -140,12 +172,12 @@ namespace MatematikProgram
 
         private void BeregnStartKapital(List<TextBox> TextBoxes)
         {
-            VaekstFormelClass VaekstFormelClass_Object = new VaekstFormelClass(TextBoxes[Const.StartKapitalTextBoxNummer].Text,
-                                                                               TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
-                                                                               TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
-                                                                               TextBoxes[Const.RentesatsTextBoxNummer].Text);
+            //VaekstFormelClass VaekstFormelClass_Object = new VaekstFormelClass(TextBoxes[Const.StartKapitalTextBoxNummer].Text,
+            //                                                                   TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
+            //                                                                   TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
+            //                                                                   TextBoxes[Const.RentesatsTextBoxNummer].Text);
             VaekstFormelClass_Object.StartKapital = Math.Round(VaekstFormelClass_Object.SlutKapital / Math.Pow((1 + VaekstFormelClass_Object.Rentesats), VaekstFormelClass_Object.AntalTerminer), Const.DefaultNumberOfDecimals);
-            TextBoxes[Const.StartKapitalTextBoxNummer].Text = VaekstFormelClass_Object.StartKapital.ToString();
+            //TextBoxes[Const.StartKapitalTextBoxNummer].Text = VaekstFormelClass_Object.StartKapital.ToString();
             BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
 
@@ -166,9 +198,10 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            VaekstFormelClass_Object.AntalTerminer = (int)(Math.Log(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital) / Math.Log(1 + VaekstFormelClass_Object.Rentesats));
+            VaekstFormelClass_Object.AntalTerminer = Convert.ToInt32(Math.Log(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital) / Math.Log(1 + VaekstFormelClass_Object.Rentesats));
             TextBoxes[Const.AntalTerminerTextBoxNummer].Text = VaekstFormelClass_Object.AntalTerminer.ToString();
             BeregnOgVisDataGrid(VaekstFormelClass_Object);
+            //VaekstFormelClass_Object.SlutKapital = 
         }
 
         private void BeregnRentesats(List<TextBox> TextBoxes)
@@ -177,7 +210,7 @@ namespace MatematikProgram
                                                                                TextBoxes[Const.SlutKapitalTextBoxNummer].Text,
                                                                                TextBoxes[Const.AntalTerminerTextBoxNummer].Text,
                                                                                TextBoxes[Const.RentesatsTextBoxNummer].Text);
-            VaekstFormelClass_Object.Rentesats = Math.Round((Math.Pow(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital, 1 / VaekstFormelClass_Object.AntalTerminer) - 1) * 100, Const.DefaultNumberOfDecimals);
+            VaekstFormelClass_Object.Rentesats = Math.Round((Math.Pow(VaekstFormelClass_Object.SlutKapital / VaekstFormelClass_Object.StartKapital, (double)(1 / VaekstFormelClass_Object.AntalTerminer)) - 1) * 100, Const.DefaultNumberOfDecimals);
             TextBoxes[Const.RentesatsTextBoxNummer].Text = VaekstFormelClass_Object.Rentesats.ToString();
             BeregnOgVisDataGrid(VaekstFormelClass_Object);
         }
@@ -188,19 +221,23 @@ namespace MatematikProgram
             switch (((System.Windows.FrameworkElement)sender).Name)
             {
                 case "btnClearStartKapital":
-                    txtStartKapital.Text = string.Empty;
+                    //txtStartKapital.Text = string.Empty;
+                    VaekstFormelClass_Object.StartKapital = 0;
                     break;
 
                 case "btnClearSlutKapital":
-                    txtSlutKapital.Text = string.Empty;
+                    //txtSlutKapital.Text = string.Empty;
+                    VaekstFormelClass_Object.SlutKapital = 0;   
                     break;
 
                 case "btnClearAntalTerminer":
-                    txtAntalTerminer.Text = string.Empty;
+                    //txtAntalTerminer.Text = string.Empty;
+                    VaekstFormelClass_Object.AntalTerminer = 0;
                     break;
 
                 case "btnClearRentesats":
-                    txtRentesats.Text = string.Empty;
+                    //txtRentesats.Text = string.Empty;
+                    VaekstFormelClass_Object.Rentesats = 0;
                     break;
             }
         }

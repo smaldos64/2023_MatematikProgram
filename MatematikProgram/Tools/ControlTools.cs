@@ -151,7 +151,7 @@ namespace MatematikProgram.Tools
             return (-1);
         }
 
-        public static int GetTextBoxNumberCOntainingZeroValueInTextBoxList(List<TextBox> TextBoxes)
+        public static int GetTextBoxNumberContainingZeroValueInTextBoxList(List<TextBox> TextBoxes)
         {
             for (int Counter = 0; Counter < TextBoxes.Count; Counter++)
             {

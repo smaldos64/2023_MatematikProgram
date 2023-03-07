@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MatematikProgram" xmlns:d3="clr-namespace:InteractiveDataDisplay.WPF;assembly=InteractiveDataDisplay.WPF"
+        xmlns:local="clr-namespace:MatematikProgram" xmlns:ScottPlot="clr-namespace:ScottPlot;assembly=ScottPlot.WPF"  
         mc:Ignorable="d"
-        Title="MatematikProgram" Height="Auto" Width="1280" Background="LightGreen" MinHeight="1020">
+        Title="MatematikProgram" Height="Auto" Width="1280" Background="Yellow" MinHeight="1020">
     <ScrollViewer VerticalScrollBarVisibility="Auto" Height="Auto">
         <StackPanel Name="ThisStack">
             <Grid Height="Auto">
@@ -48,10 +48,12 @@
                                 <Button Content="Clear Rentesats Felt" HorizontalAlignment="Left" VerticalAlignment="Center" Width="130" Name="btnClearRentesats" Grid.ColumnSpan="1" Grid.Row="3" Grid.Column="4" Click="btnClearVaekstformelTextBox_Click" />
                                 <Button Content="Beregn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Name="btnBeregnVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="1" Click="btnBeregnVaekstFormelVariable_Click"/>
                                 <Button Content="Clear Alle Felter" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Name="btnClearVaekstFormelVariable" Grid.ColumnSpan="1" Grid.Row="5" Grid.Column="4" Click="btnClearVaekstFormelVariable_Click" />
-                                <DataGrid Name="VaekstformelBeregningerDataGrid" Grid.ColumnSpan="4" Grid.Column="0" Grid.Row="7" Visibility="Hidden" CanUserAddRows="False" VerticalScrollBarVisibility="Visible" MaxHeight="500"/>
-                                <d3:Chart BottomTitle="Argument" LeftTitle="Function" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="8" >
-                                    <d3:LineGraph x:Name="linegraph" Description="Simple linegraph" Stroke="Blue" StrokeThickness="3"/>
-                                </d3:Chart>
+                                <DataGrid Name="VaekstformelBeregningerDataGrid" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="7" Visibility="Hidden" CanUserAddRows="False" VerticalScrollBarVisibility="Visible" MaxHeight="500" Height="Auto"/>
+                                <StackPanel x:Name="PlotPanelVaekstFormel" IsEnabled="False" Visibility="Hidden" Grid.Column="4" Grid.Row="7">
+                                    <Grid MinWidth="400" MinHeight="400">
+                                        <WpfPlot Name="WpfPlot1" />
+                                    </Grid>
+                                </StackPanel>
                              </Grid> 
                             </StackPanel>
                         </TabItem>

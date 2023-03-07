@@ -19,8 +19,6 @@ using MatematikProgram.Tools;
 using MatematikProgram.Constants;
 using MatematikProgram.Models;
 
-using InteractiveDataDisplay;
-using ScottPlot;
 using ScottPlot.WPF;
 using System.Diagnostics.Metrics;
 using System.Reflection;
@@ -60,7 +58,6 @@ namespace MatematikProgram
                     TextBoxList.Add(txtAntalTerminer);
                     TextBoxList.Add(txtRentesats);
                     NumberOfTextBoxesShouldBeFilled = Const.RentesatsTextBoxNummer;
-                    //ControlTools.ClearTextBoxes(TextBoxList);
                     MethodDelegateList.Clear();
                     MethodDelegateList.Add(BeregnStartKapital);
                     MethodDelegateList.Add(BeregnSlutKapital);
@@ -177,7 +174,7 @@ namespace MatematikProgram
             Arrow1.ArrowheadLength = 5;
             Arrow1.ArrowheadWidth = 2;
             Arrow1.MinimumLengthPixels = 25;
-            Arrow1.Label = "Start Beløb1";
+            Arrow1.Label = "Start Beløb";
             
             var Arrow2 = WpfPlot1.Plot.AddArrow(dataXaxis[VaekstFormelClass_Object.AntalTerminer - 1],
                                                 VaekstFormelClass_Object.SlutKapital, 
@@ -188,7 +185,7 @@ namespace MatematikProgram
             Arrow2.ArrowheadLength = 5;
             Arrow2.ArrowheadWidth = 2;
             Arrow2.MinimumLengthPixels = 25;
-            Arrow2.Label = "Slut Beløb1";
+            Arrow2.Label = "Slut Beløb";
 
             WpfPlot1.Plot.AddScatter(dataXaxis, dataYaxis);
             WpfPlot1.Plot.SaveFig("Beregning.png");

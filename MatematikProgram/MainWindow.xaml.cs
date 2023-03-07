@@ -177,7 +177,7 @@ namespace MatematikProgram
             Arrow1.ArrowheadLength = 5;
             Arrow1.ArrowheadWidth = 2;
             Arrow1.MinimumLengthPixels = 25;
-            Arrow1.Label = "Start Beløb";
+            Arrow1.Label = "Start Beløb1";
             
             var Arrow2 = WpfPlot1.Plot.AddArrow(dataXaxis[VaekstFormelClass_Object.AntalTerminer - 1],
                                                 VaekstFormelClass_Object.SlutKapital, 
@@ -188,7 +188,7 @@ namespace MatematikProgram
             Arrow2.ArrowheadLength = 5;
             Arrow2.ArrowheadWidth = 2;
             Arrow2.MinimumLengthPixels = 25;
-            Arrow2.Label = "Slut Beløb";
+            Arrow2.Label = "Slut Beløb1";
 
             WpfPlot1.Plot.AddScatter(dataXaxis, dataYaxis);
             WpfPlot1.Plot.SaveFig("Beregning.png");
